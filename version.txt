@@ -1,3 +1,4 @@
+v 1.0.6 => main: transaction id aniqlashdi yangilandi
 v 1.0.5 => main: transaction id aniqlashdi
 v 1.0.4 => main: xizmat nimi masalam payme or click nomi qo'shildi
 v 1.0.3 => main: amount = none qolibdi yu back bekor bo'ldi

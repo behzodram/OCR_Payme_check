@@ -20,7 +20,7 @@ async def extract_payment_info(text: str):
 
     # Transaction ID (identifikatori yoki id= holatlari uchun)
     transaction_match = re.search(
-        r'(?:identifikatori|id)[^\d]*(\d+)',
+        r'(?:identifikator|id)\s*[:=]?\s*(\d+)',
         clean_text,
         re.IGNORECASE
     )
