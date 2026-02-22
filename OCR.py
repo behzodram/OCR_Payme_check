@@ -33,7 +33,7 @@ async def extract_payment_info(text: str):
         re.IGNORECASE
     )
 
-    amount = None
+    # amount = None
     if amount_match:
         amount = re.sub(r'[^\d.]', '', amount_match.group(1))
 
