@@ -14,19 +14,35 @@ from commands import start, stats, help_command, share
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 # OCR orqali to‘lov ma’lumotlarini ajratib olish
-async def extract_payment_info(text):
-    # Regex orqali kerakli qismlar
-    # Transaction ID
-    transaction_match = re.search(r'Tollov identifikatori:\s*(\d+)', text)
-    transaction_id = transaction_match.group(1) if transaction_match else "Topilmadi"
+async def extract_payment_info(text: str):
+    # Textni normalize qilamiz
+    clean_text = text.replace("’", "'").replace("`", "'")
 
-    # Amount
-    amount_match = re.search(r'To\'?llov summasi:\s*([\d\s,.]+) so\'m', text)
-    amount = amount_match.group(1).replace(" ", "") if amount_match else "Topilmadi"
+    # Transaction ID (identifikatori yoki id= holatlari uchun)
+    transaction_match = re.search(
+        r'(?:identifikatori|id)[^\d]*(\d{5,})',
+        clean_text,
+        re.IGNORECASE
+    )
+    transaction_id = transaction_match.group(1) if transaction_match else None
+
+    # Amount (so'm, som, so m variantlari uchun)
+    amount_match = re.search(
+        r'summasi[^\d]*([\d\s,.]+)',
+        clean_text,
+        re.IGNORECASE
+    )
+
+    amount = None
+    if amount_match:
+        amount = re.sub(r'[^\d.]', '', amount_match.group(1))
 
     # Date / Time
-    time_match = re.search(r'Tolov vaqti\s*(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})', text)
-    payment_time = time_match.group(1) if time_match else "Topilmadi"
+    time_match = re.search(
+        r'(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})',
+        clean_text
+    )
+    payment_time = time_match.group(1) if time_match else None
 
     return transaction_id, amount, payment_time
 

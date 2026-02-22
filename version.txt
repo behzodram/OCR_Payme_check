@@ -1,1 +1,2 @@
+v 1.0.1 => main: regex malumotlari dizayni o'zgardi
 v 1.0.0 => main: removed full matn just info message
