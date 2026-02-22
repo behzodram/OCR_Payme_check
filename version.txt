@@ -1,3 +1,4 @@
+v 1.0.4 => main: xizmat nimi masalam payme or click nomi qo'shildi
 v 1.0.3 => main: amount = none qolibdi yu back bekor bo'ldi
 v 1.0.2 => main: amount = none qolibdi yu
 v 1.0.1 => main: regex malumotlari dizayni o'zgardi

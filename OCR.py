@@ -44,7 +44,20 @@ async def extract_payment_info(text: str):
     )
     payment_time = time_match.group(1) if time_match else None
 
-    return transaction_id, amount, payment_time
+    # Payment Service
+    service_match = re.search(
+        r'xizmati[:\s]+([a-z]+)',
+        clean_text,
+        re.IGNORECASE
+    )
+    payment_service = service_match.group(1) if service_match else None
+
+    return {
+        "transaction_id": transaction_id,
+        "amount": amount,
+        "payment_time": payment_time,
+        "payment_service": payment_service
+    }
 
 # Rasmni qabul qilish va Tesseract OCR
 async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -60,8 +73,8 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         text = "Matn topilmadi."
 
     # To‘lov ma’lumotlarini ajratib olish
-    transaction_id, amount, payment_time = await extract_payment_info(text)
-    await update.message.reply_text(f"To‘lov ma’lumotlari:\nIdentifikator: {transaction_id}\nSumma: {amount} so'm\nVaqt: {payment_time}")
+    payment_info = await extract_payment_info(text)
+    await update.message.reply_text(f"To‘lov ma’lumotlari:\nIdentifikator: {payment_info['transaction_id']}\nSumma: {payment_info['amount']} so'm\nVaqt: {payment_info['payment_time']}\nXizmat: {payment_info['payment_service']}")
 
 # Bot ishga tushurish
 if __name__ == "__main__":
