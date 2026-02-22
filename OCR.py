@@ -45,7 +45,7 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # To‘lov ma’lumotlarini ajratib olish
     transaction_id, amount, payment_time = await extract_payment_info(text)
-    await update.message.reply_text(f"Matn: {text}\n\nTo‘lov ma’lumotlari:\nIdentifikator: {transaction_id}\nSumma: {amount} so'm\nVaqt: {payment_time}")
+    await update.message.reply_text(f"To‘lov ma’lumotlari:\nIdentifikator: {transaction_id}\nSumma: {amount} so'm\nVaqt: {payment_time}")
 
 # Bot ishga tushurish
 if __name__ == "__main__":
