@@ -12,60 +12,43 @@ from commands import start, stats, help_command, share
 
 # Logger
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
-import re
 
-async def normalize_text(text: str) -> str:
-    """
-    OCR xatolarini minimal darajada tozalash
-    """
-    replacements = {
-        "’": "'",
-        "`": "'",
-        "‘": "'",
-        "O": "0",
-        "I": "1",
-        "l": "1",
-        "—": "-",
-    }
-
-    for k, v in replacements.items():
-        text = text.replace(k, v)
-
-    return text
-
-
+# OCR orqali to‘lov ma’lumotlarini ajratib olish
 async def extract_payment_info(text: str):
-    text = await normalize_text(text)
-    lower_text = text.lower()
+    # Textni normalize qilamiz
+    clean_text = text.replace("’", "'").replace("`", "'")
 
-    # 🔹 Transaction ID (identifikator yoki id=)
+    # Transaction ID (identifikatori yoki id= holatlari uchun)
     transaction_match = re.search(
-        r'(?:identifikator|identifikatori|id)\s*[:=]?\s*(\d{4,})',
-        lower_text
+        r'(?:identifikatori|id)[^\d]*(\d{5,})',
+        clean_text,
+        re.IGNORECASE
     )
     transaction_id = transaction_match.group(1) if transaction_match else None
 
-    # 🔹 Amount (summa, summasi, so'm, som, so m)
+    # Amount (so'm, som, so m variantlari uchun)
     amount_match = re.search(
-        r'(?:summa|summasi)\s*[:=]?\s*([\d\s,.]+)',
-        lower_text
+        r'summasi[^\d]*([\d\s,.]+)',
+        clean_text,
+        re.IGNORECASE
     )
 
     amount = None
     if amount_match:
         amount = re.sub(r'[^\d.]', '', amount_match.group(1))
 
-    # 🔹 Time
+    # Date / Time
     time_match = re.search(
         r'(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})',
-        text
+        clean_text
     )
     payment_time = time_match.group(1) if time_match else None
 
-    # 🔹 Service (Click, Payme, Uzum va hokazo)
+    # Payment Service
     service_match = re.search(
-        r'(?:xizmat|xizmati)\s*[:=]?\s*([a-z]+)',
-        lower_text
+        r'xizmati[:\s]+([a-z]+)',
+        clean_text,
+        re.IGNORECASE
     )
     payment_service = service_match.group(1) if service_match else None
 

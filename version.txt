@@ -1,3 +1,4 @@
+v 1.0.8 => main: Yana bir versiya ortga qaytdi
 v 1.0.7 => main: Regex mustahkamlashdi
 v 1.0.6 => main: transaction id aniqlashdi yangilandi
 v 1.0.5 => main: transaction id aniqlashdi
