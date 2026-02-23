@@ -1,3 +1,4 @@
+v 1.1.0 => main: After payment collection CODE ERROR
 v 1.0.9 => main: FB collection added with FB storage
 v 1.0.8 => main: Yana bir versiya ortga qaytdi
 v 1.0.7 => main: Regex mustahkamlashdi

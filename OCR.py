@@ -96,12 +96,12 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # Firestore check: agar mavjud bo'lsa ogohlantirish
     doc_ref = db.collection("payments").document(transaction_id)
-    doc = doc_ref.get()
-    if doc.exists:
-        await update.message.reply_text(
-            f"Transaction ID band, iltimos checkni 1 marta jo'nating. \n\nAgar muammo bo'lsa, admin bilan bog'laning.\nBot username: @{BOT_USERNAME}"
-        )
-        return
+    # doc = doc_ref.get()
+    # if doc.exists:
+    #     await update.message.reply_text(
+    #         f"Transaction ID band, iltimos checkni 1 marta jo'nating. \n\nAgar muammo bo'lsa, admin bilan bog'laning.\nBot username: @{BOT_USERNAME}"
+    #     )
+    #     return
 
     created_at = datetime.datetime.utcnow().isoformat()
 
