@@ -62,31 +62,6 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("✅ Check malumotlari tekshirilmoqda...")
         await update.message.reply_text(f"To'lov ma'lumotlari:\nIdentifikator: {payment_info['transaction_id']}\nXizmat: {payment_info['payment_service']}\nSumma: {payment_info['amount']} so'm\nVaqt: {payment_info['payment_time']}")
 
-    context.user_data['payment_info'] = payment_info
-    context.user_data['photo_bytes'] = photo_bytes
-    context.user_data['check_valid'] = checkmi
-
-
-
-async def phone_check_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if not payment_info:
-        await update.message.reply_text("❌ To'lov ma'lumotlari topilmadi.")
-        return
-    if not photo_bytes:
-        await update.message.reply_text("❌ Rasm ma'lumotlari topilmadi.")
-        return
-    if not check_valid:
-        await update.message.reply_text("❌ Check noto'g'ri yoki to'liq emas.")
-        return
-        
-    payment_info = context.user_data.get("payment_info")
-    photo_bytes = context.user_data.get("photo_bytes")
-    check_valid = context.user_data.get("check_valid")
-
-    if not check_valid:
-        await update.message.reply_text("❌ Check noto'g'ri yoki to'liq emas.")
-        return
-
     payment_time = payment_info['payment_time']
     amount = float(payment_info['amount']) if payment_info['amount'] else 0
 
@@ -140,7 +115,6 @@ async def phone_check_handler(update: Update, context: ContextTypes.DEFAULT_TYPE
         f"Telefon raqamingiz: {fb_phone}"
     )
 
-
 # Bot ishga tushurish
 if __name__ == "__main__":
     app = ApplicationBuilder().token(BOT_TOKEN).build()
@@ -151,11 +125,16 @@ if __name__ == "__main__":
     app.add_handler(CommandHandler("help", help_command))
     # share uchun lambda orqali BOT_USERNAME beriladi
     app.add_handler(CommandHandler("share", lambda u, c: share(u, c, BOT_USERNAME)))
-    
+
     # Rasm handler
     app.add_handler(MessageHandler(filters.PHOTO, photo_handler))
-    # phone_check handler
-    app.add_handler(CommandHandler("phone_check", phone_check_handler))
+
     print("Bot ishga tushdi...")
     app.run_polling()
 
+
+# Firebase ishga tushirish (bitta marta)
+cred = credentials.Certificate("firebase_service_account.json")
+firebase_admin.initialize_app(cred, {
+    'storageBucket': 'your-bucket-name.appspot.com'
+})
