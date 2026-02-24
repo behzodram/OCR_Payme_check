@@ -118,7 +118,7 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # Bot ishga tushurish
 if __name__ == "__main__":
     app = ApplicationBuilder().token(BOT_TOKEN).build()
-
+    
     # Komandalarni qo'shish
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("stats", stats))
