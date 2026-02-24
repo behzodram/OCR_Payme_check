@@ -95,7 +95,8 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
 
             await update.message.reply_photo(photo)
-    await update.message.reply_text("✅ Check qabul qilindi.")
+    else:
+        await update.message.reply_text("✅ Check qabul qilindi.")
     
     await update.message.reply_text(f"To‘lov ma’lumotlari:\nIdentifikator: {payment_info['transaction_id']}\nXizmat: {payment_info['payment_service']}\nSumma: {payment_info['amount']} so'm\nVaqt: {payment_info['payment_time']}")
 
