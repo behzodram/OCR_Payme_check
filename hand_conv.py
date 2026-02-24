@@ -43,7 +43,7 @@ async def firebase_init():
 # 1️⃣ RASM + CAPTION QABUL QILISH
 async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE, db, bucket):
     # Firebase initialization
-    # db, bucket = firebase_init()
+    db, bucket = await firebase_init()
 
     photo_file = await update.message.photo[-1].get_file()
     photo_bytes = await photo_file.download_as_bytearray()
@@ -80,7 +80,7 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE, db, 
     context.user_data["payment_info"] = payment_info
     context.user_data["checkmi"] = checkmi 
     
-    context.user_data["photo_file_id"] = update.message.photo[-1].file_id
+    context.user_data["photo_file_id"] = await update.message.photo[-1].file_id
     
     return WAIT_PHONE
 
@@ -88,9 +88,9 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE, db, 
 # 2️⃣ TELEFONNI TEKSHIRISH
 async def phone_check_handler(update: Update, context: ContextTypes.DEFAULT_TYPE, db, bucket):
     # Firebase initialization
-    # db, bucket = firebase_init()
+    db, bucket = await firebase_init()
 
-    user_phone = update.message.text.strip()
+    user_phone = await update.message.text.strip()
     caption_text = context.user_data.get("caption_text")
 
     if not caption_text:

@@ -1,3 +1,4 @@
+v 1.3.4 => main: bazi joylarda await qop ketgan ekan
 v 1.3.3 => main: commented firebase init
 v 1.3.2 => main: handler_conv.py test ocr on VPS
 v 1.3.1 => main: Go back old OCR and temp joriy for update this one
