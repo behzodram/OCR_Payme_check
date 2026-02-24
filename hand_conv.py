@@ -65,8 +65,11 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     db = context.application.bot_data["db"]
     bucket = context.application.bot_data["bucket"]
 
-    photo_file = await update.message.photo[-1].get_file()
-    photo_bytes = await photo_file.download_as_bytearray()
+    photo_file_id = context.user_data.get("photo_file_id")
+
+    # Telegram dan file_id orqali faylni olish
+    file = await context.bot.get_file(photo_file_id)
+    photo_bytes = await file.download_as_bytearray()
 
     img = Image.open(io.BytesIO(photo_bytes))
     text = pytesseract.image_to_string(img, lang='uz+eng')
@@ -104,9 +107,11 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     context.user_data["payment_info"] = payment_info
     context.user_data["checkmi"] = checkmi 
-    
-    # context.user_data["photo_file_id"] = await update.message.photo[-1].file_id
-    
+
+    # Rasmni saqlaymiz    
+    photo = update.message.photo[-1]
+    context.user_data["photo_file_id"] = photo.file_id
+
     return WAIT_PHONE
 
 
@@ -162,6 +167,10 @@ async def phone_check_handler(update: Update, context: ContextTypes.DEFAULT_TYPE
         "status": "success"
     })
 
+    photo_file_id = context.user_data.get("photo_file_id")
+
+    photo_bytes = context.user_data.get("photo_bytes")
+    
     # Rasmni Storage ga saqlash
     file_name = f"checks/{payment_info['transaction_id']}.jpg"
     blob = bucket.blob(file_name)

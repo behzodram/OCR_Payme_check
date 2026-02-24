@@ -1,3 +1,4 @@
+v 1.6.5 => main: file id RAMda saqlandi va u bo'yicha photo olinib fb Storageda saqlandi
 v 1.6.4 => main: amount defined
 v 1.6.3 => main: amount defined
 v 1.6.2 => main: transaction id bo'yicha storageda saqlanmoqda.
