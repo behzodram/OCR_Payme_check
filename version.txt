@@ -1,3 +1,4 @@
+v 1.2.4 => main: message
 v 1.2.3 => main: from config import *
 v 1.2.2 => main: phtoto handler 2ga ajratildi
 v 1.2.1 => main: from config import *

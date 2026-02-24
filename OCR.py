@@ -73,6 +73,8 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("❌ Checkingiz Bazada topilmadi.")
         return
 
+    await update.message.reply_text("✅ Checkingiz Bazada topildi, tekshirish davom etmoqda...")
+    
     data = doc.to_dict()
     
     # Check used flag
