@@ -43,7 +43,8 @@ async def firebase_init():
 # 1️⃣ RASM + CAPTION QABUL QILISH
 async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Firebase initialization
-    db, bucket = await firebase_init()
+    db = context.application.bot_data["db"]
+    bucket = context.application.bot_data["bucket"]
 
     photo_file = await update.message.photo[-1].get_file()
     photo_bytes = await photo_file.download_as_bytearray()
@@ -88,8 +89,9 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # 2️⃣ TELEFONNI TEKSHIRISH
 async def phone_check_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Firebase initialization
-    db, bucket = await firebase_init()
-
+    db = context.application.bot_data["db"]
+    bucket = context.application.bot_data["bucket"]
+    
     user_phone = await update.message.text.strip()
     caption_text = context.user_data.get("caption_text")
 
@@ -113,6 +115,13 @@ async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 def main():
     app = ApplicationBuilder().token(BOT_TOKEN).build()
+
+    # Firebase init
+    db, bucket = await firebase_init()
+
+    # Global saqlaymiz
+    app.bot_data["db"] = db
+    app.bot_data["bucket"] = bucket
 
     conv_handler = ConversationHandler(
         entry_points=[MessageHandler(filters.PHOTO, photo_handler)],
