@@ -131,13 +131,6 @@ async def phone_check_handler(update: Update, context: ContextTypes.DEFAULT_TYPE
         return ConversationHandler.END
     await update.message.reply_text("📱 Telefon raqami mos chiqdi.")
 
-
-    # Oddiy taqqoslash (caption ichida telefon mavjudligini tekshiramiz)
-    if user_phone in caption_text:
-        await update.message.reply_text("✅ Mos keldi.")
-    else:
-        await update.message.reply_text("❌ Mos kelmadi.")
-
     return ConversationHandler.END
 
 
