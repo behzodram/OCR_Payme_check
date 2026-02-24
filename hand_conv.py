@@ -105,7 +105,9 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     context.user_data["payment_info"] = payment_info
     context.user_data["checkmi"] = checkmi 
     
-    # context.user_data["photo_file_id"] = await update.message.photo[-1].file_id
+    file_id = update.message.photo[-1].file_id
+    # faqat file_id saqlanadi
+    context.user_data["photo_file_id"] = file_id
     
     return WAIT_PHONE
 
@@ -162,7 +164,17 @@ async def phone_check_handler(update: Update, context: ContextTypes.DEFAULT_TYPE
         "status": "success"
     })
 
-    
+    # context.user_data dan file_id olamiz
+    file_id = context.user_data.get("photo_file_id")
+    if not file_id:
+        await update.message.reply_text("❌ Oldingi rasm contextda topilmadi.")
+        return ConversationHandler.END
+
+    # Telegramdan file_id orqali file olish
+    file = await context.bot.get_file(file_id)
+    # photo_bytes hosil qilamiz
+    photo_bytes = await file.download_as_bytearray()
+
     # Rasmni Storage ga saqlash
     file_name = f"checks/{payment_info['transaction_id']}.jpg"
     blob = bucket.blob(file_name)
