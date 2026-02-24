@@ -102,7 +102,7 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     context.user_data["payment_info"] = payment_info
     context.user_data["checkmi"] = checkmi 
     
-    context.user_data["photo_file_id"] = await update.message.photo[-1].file_id
+    # context.user_data["photo_file_id"] = await update.message.photo[-1].file_id
     
     return WAIT_PHONE
 
