@@ -4,7 +4,7 @@ from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
 from PIL import Image
 import pytesseract
-from config import BOT_TOKEN, BOT_USERNAME
+from config import *
 import firebase_admin
 from firebase_admin import credentials, firestore, storage
 import io, os
