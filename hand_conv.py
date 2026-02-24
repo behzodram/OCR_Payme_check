@@ -41,6 +41,24 @@ def firebase_init():
     bucket = storage.bucket()
     return db, bucket
 
+async def firebase_phone(db, payment_time):
+    # Firestore collection: payments
+    doc_ref = db.collection('payments').document(payment_time)
+    doc = doc_ref.get()
+
+    if not doc.exists:
+        await update.message.reply_text("❌ Checkingiz Bazada topilmadi.")
+        return None
+        
+    data = doc.to_dict()
+    fb_phone = data.get("phone")
+    if not fb_phone:
+        await update.message.reply_text("❌ Telefon raqam topilmadi.")
+        return ConversationHandler.END
+    return fb_phone
+    
+
+
 # 1️⃣ RASM + CAPTION QABUL QILISH
 async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Firebase initialization
@@ -69,6 +87,7 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_photo(photo)
         return ConversationHandler.END
 
+    fb_phone = await firebase_phone(db)
     await update.message.reply_text(
         "📸 Rasm qabul qilindi.\n"
         "To'lov ma'lumotlari:\n\n"
@@ -76,12 +95,18 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"Xizmat: {payment_info['payment_service']}\n"
         f"Summa: {payment_info['amount']} so'm\n"
         f"Vaqt: {payment_info['payment_time']}\n\n"
-        "📱 Endi telefon raqamingizni kiriting:"
+        f"📱 Endi {fb_phone[-4:]}-xx-xx ni songgi 4 raqamini kiriting:"
+    )
+
+    await update.message.reply_text(
+        f"Telefon raqamingiz: {masked}\n\n"
+        "Iltimos, telefon raqamingizning so‘nggi 4 raqamini kiriting:"
     )
 
     context.user_data["payment_info"] = payment_info
     context.user_data["checkmi"] = checkmi 
     
+    context.user_data["user_phone4"] = text  # Caption matnini saqlaymiz
     # context.user_data["photo_file_id"] = await update.message.photo[-1].file_id
     
     return WAIT_PHONE
