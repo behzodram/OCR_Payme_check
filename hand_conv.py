@@ -41,7 +41,7 @@ async def firebase_init():
     return db, bucket
 
 # 1️⃣ RASM + CAPTION QABUL QILISH
-async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE, db, bucket):
+async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Firebase initialization
     db, bucket = await firebase_init()
 
@@ -86,7 +86,7 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE, db, 
 
 
 # 2️⃣ TELEFONNI TEKSHIRISH
-async def phone_check_handler(update: Update, context: ContextTypes.DEFAULT_TYPE, db, bucket):
+async def phone_check_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Firebase initialization
     db, bucket = await firebase_init()
 
