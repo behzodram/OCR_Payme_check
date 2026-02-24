@@ -36,7 +36,10 @@ firebase_admin.initialize_app(cred, {
 db = firestore.client()
 bucket = storage.bucket()
 
+CHECK_PHOTO, WAIT_PHONE = range(2)
+
 async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
     photo_file = await update.message.photo[-1].get_file()
     photo_bytes = await photo_file.download_as_bytearray()
 
@@ -44,76 +47,100 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = pytesseract.image_to_string(img, lang='uz+eng')
 
     if not text.strip():
-        await update.message.reply_text("Matn topilmadi.")
-        return
+        await update.message.reply_text("❌ Matn topilmadi.")
+        return ConversationHandler.END
 
     payment_info = await extract_payment_info(text)
-    checkmi = await Rahmat_check(update.message, payment_info)
 
-    if not checkmi:
-        with open("photos/check.jpg", "rb") as photo:
-            await update.message.reply_text(
-                "❌ Check noto'g'ri yoki to'liq emas.\n\n"
-                "Iltimos, quyidagi namunaga o'xshash to'liq Rahmat check yuboring 👇"
-            )
-            await update.message.reply_photo(photo)
-        return
-    else:
-        await update.message.reply_text("✅ Check malumotlari tekshirilmoqda...")
-        await update.message.reply_text(f"To'lov ma'lumotlari:\nIdentifikator: {payment_info['transaction_id']}\nXizmat: {payment_info['payment_service']}\nSumma: {payment_info['amount']} so'm\nVaqt: {payment_info['payment_time']}")
+    if not payment_info:
+        await update.message.reply_text("❌ Check noto‘g‘ri.")
+        return ConversationHandler.END
 
-    payment_time = payment_info['payment_time']
-    amount = float(payment_info['amount']) if payment_info['amount'] else 0
+    payment_time = payment_info.get("payment_time")
 
-    # Firestore collection: payments
-    doc_ref = db.collection('payments').document(payment_time)
+    doc_ref = db.collection("payments").document(payment_time)
     doc = doc_ref.get()
 
     if not doc.exists:
-        await update.message.reply_text("❌ Checkingiz Bazada topilmadi.")
-        return
-
-    await update.message.reply_text("✅ Checkingiz Bazada topildi, tekshirish davom etmoqda...")
+        await update.message.reply_text("❌ Checkingiz bazada topilmadi.")
+        return ConversationHandler.END
 
     data = doc.to_dict()
-    
-    # Check used flag
-    if data.get('used'):
-        await update.message.reply_text("⚠️ Check allaqachon ishlatilgan (used).")
-        return
 
-    fb_amount = float(data.get('amount', 0))
-    # Summa tekshiruvi: diff < 6%
-    if abs(fb_amount - amount)/fb_amount > 0.06:
-        await update.message.reply_text("❌ Checkdagi summa FBdagi summa bilan mos emas.")
-        return
+    if data.get("used"):
+        await update.message.reply_text("⚠️ Check allaqachon ishlatilgan.")
+        return ConversationHandler.END
 
-    await update.message.reply_text("✅ Check to'lov miqdori FBdagi ma'lumotlar bilan mos keldi, telefon raqami tekshirilmoqda...")
+    fb_phone = data.get("phone")
+    if not fb_phone:
+        await update.message.reply_text("❌ Telefon raqam topilmadi.")
+        return ConversationHandler.END
 
-    # Mijoz yuborgan raqam
-    user_phone = payment_info.get('phone')  # Agar OCRdan olish mumkin bo'lsa
-    fb_phone = data.get('phone')  # Firestore'da saqlangan 90-636-xx-xx
+    # 🔥 USER_DATA ga saqlaymiz
+    context.user_data["payment_time"] = payment_time
+    context.user_data["photo_bytes"] = photo_bytes
+    context.user_data["fb_phone"] = fb_phone
+    context.user_data["fb_amount"] = float(data.get("amount", 0))
 
-    if not user_phone or user_phone[-4:] != fb_phone[-4:]:
-        await update.message.reply_text("❌ Check sizga tegishli emas.")
-        return
+    # Maskalangan ko‘rinish
+    masked = fb_phone[:-4] + "xxxx"
 
-    # Hammasi to'g'ri bo'lsa, status success va used=True
+    await update.message.reply_text(
+        f"Telefon raqamingiz: {masked}\n\n"
+        "Iltimos, telefon raqamingizning so‘nggi 4 raqamini kiriting:"
+    )
+
+    return WAIT_PHONE
+
+
+async def phone_check_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+    user_last4 = update.message.text.strip()
+
+    fb_phone = context.user_data.get("fb_phone")
+    payment_time = context.user_data.get("payment_time")
+    photo_bytes = context.user_data.get("photo_bytes")
+    fb_amount = context.user_data.get("fb_amount")
+
+    if not fb_phone:
+        await update.message.reply_text("❌ Sessiya muddati tugagan. Qayta urinib ko‘ring.")
+        return ConversationHandler.END
+
+    if user_last4 != fb_phone[-4:]:
+        await update.message.reply_text("❌ So‘nggi 4 raqam noto‘g‘ri. Qayta kiriting:")
+        return WAIT_PHONE
+
+    # 🔥 Hamma narsa to‘g‘ri — status update
+    doc_ref = db.collection("payments").document(payment_time)
+
     doc_ref.update({
         "used": True,
         "status": "success"
     })
 
-    # Rasmni Storage ga saqlash
+    # Storage ga yuklash
     file_name = f"checks/{payment_time.replace(' ', '_')}.jpg"
     blob = bucket.blob(file_name)
-    blob.upload_from_string(photo_bytes, content_type='image/jpeg')
+    blob.upload_from_string(photo_bytes, content_type="image/jpeg")
 
-    # Xabar yuborish
     await update.message.reply_text(
-        f"✅ To'lov tasdiqlandi. Obunangiz faollashdi!\n"
-        f"Telefon raqamingiz: {fb_phone}"
+        f"✅ To‘lov tasdiqlandi!\nTelefon: {fb_phone}"
     )
+
+    # Sessiyani tozalaymiz
+    context.user_data.clear()
+
+    return ConversationHandler.END
+
+conv_handler = ConversationHandler(
+    entry_points=[MessageHandler(filters.PHOTO, photo_handler)],
+    states={
+        WAIT_PHONE: [
+            MessageHandler(filters.TEXT & ~filters.COMMAND, phone_check_handler)
+        ]
+    },
+    fallbacks=[CommandHandler("cancel", lambda u, c: ConversationHandler.END)]
+)
 
 # Bot ishga tushurish
 if __name__ == "__main__":
@@ -127,14 +154,7 @@ if __name__ == "__main__":
     app.add_handler(CommandHandler("share", lambda u, c: share(u, c, BOT_USERNAME)))
 
     # Rasm handler
-    app.add_handler(MessageHandler(filters.PHOTO, photo_handler))
-
+    app.add_handler(conv_handler)
+    
     print("Bot ishga tushdi...")
     app.run_polling()
-
-
-# Firebase ishga tushirish (bitta marta)
-cred = credentials.Certificate("firebase_service_account.json")
-firebase_admin.initialize_app(cred, {
-    'storageBucket': 'your-bucket-name.appspot.com'
-})
