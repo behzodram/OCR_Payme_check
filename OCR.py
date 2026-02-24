@@ -74,7 +74,7 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     await update.message.reply_text("✅ Checkingiz Bazada topildi, tekshirish davom etmoqda...")
-    
+
     data = doc.to_dict()
     
     # Check used flag
@@ -87,6 +87,8 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if abs(fb_amount - amount)/fb_amount > 0.06:
         await update.message.reply_text("❌ Checkdagi summa FBdagi summa bilan mos emas.")
         return
+
+    await update.message.reply_text("✅ Check to'lov miqdori FBdagi ma'lumotlar bilan mos keldi, telefon raqami tekshirilmoqda...")
 
     # Mijoz yuborgan raqam
     user_phone = payment_info.get('phone')  # Agar OCRdan olish mumkin bo'lsa
