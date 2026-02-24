@@ -125,10 +125,10 @@ async def phone_check_handler(update: Update, context: ContextTypes.DEFAULT_TYPE
         return ConversationHandler.END
     
     fb_phone = await firebase_phone(db, payment_info['payment_time'], update)
-    if not fb_phone:
-        await update.message.reply_text("❌ Telefon raqam topilmadi.")
+    if fb_phone in [None, -1, -2]:
+        # await update.message.reply_text("❌ Check ma'lumotlari Bazada topilmadi.")
         return ConversationHandler.END
-    
+        
     if user_phone != fb_phone[-4:]:
         await update.message.reply_text("❌ Telefon raqam mos kelmadi. Iltimos, qayta urinib ko'ring.")
         return ConversationHandler.END

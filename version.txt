@@ -1,3 +1,4 @@
+v 1.6.0 => main: commented
 v 1.5.9 => main: commented
 v 1.5.8 => main: commented
 v 1.5.7 => main: rem conv END and -1 or -2 to firebase_phone
