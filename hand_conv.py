@@ -140,6 +140,8 @@ async def phone_check_handler(update: Update, context: ContextTypes.DEFAULT_TYPE
 
     data = doc.to_dict()
 
+    await update.message.reply_text("used flag tekshirilmoqda...")
+    
     # Check used flag
     if data.get('used'):
         await update.message.reply_text("⚠️ Check allaqachon ishlatilgan (used).")
