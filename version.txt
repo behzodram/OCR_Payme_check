@@ -1,3 +1,4 @@
+v 1.5.7 => main: rem conv END and -1 or -2 to firebase_phone
 v 1.5.6 => main: conv END added to firebase_phone
 v 1.5.5 => main: conv END
 v 1.5.4 => main: update
