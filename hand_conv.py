@@ -141,12 +141,13 @@ async def phone_check_handler(update: Update, context: ContextTypes.DEFAULT_TYPE
     data = doc.to_dict()
 
     await update.message.reply_text("used flag tekshirilmoqda...")
-    
+
     # Check used flag
     if data.get('used'):
         await update.message.reply_text("⚠️ Check allaqachon ishlatilgan (used).")
         return ConversationHandler.END
 
+    amount = float(payment_info['amount']) if payment_info['amount'] else 0
     fb_amount = float(data.get('amount', 0))
     # Summa tekshiruvi: diff < 6%
     if abs(fb_amount - amount)/fb_amount > 0.06:
