@@ -41,7 +41,7 @@ def firebase_init():
     bucket = storage.bucket()
     return db, bucket
 
-async def firebase_phone(db):
+async def firebase_phone(db, payment_time):
     # Firestore collection: payments
     doc_ref = db.collection('payments').document(payment_time)
     doc = doc_ref.get()
@@ -87,7 +87,8 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_photo(photo)
         return ConversationHandler.END
 
-    fb_phone = await firebase_phone(db)
+    fb_phone = await firebase_phone(db, payment_info['payment_time'])
+    
     await update.message.reply_text(
         "📸 Rasm qabul qilindi.\n"
         "To'lov ma'lumotlari:\n\n"
@@ -97,7 +98,7 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"Vaqt: {payment_info['payment_time']}\n\n"
         f"📱 Endi {fb_phone[-4:]}-xx-xx ni songgi 4 raqamini kiriting:"
     )
-    
+
     context.user_data["payment_info"] = payment_info
     context.user_data["checkmi"] = checkmi 
     

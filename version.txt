@@ -1,3 +1,4 @@
+v 1.4.6 => main: nimadir qilommanda
 v 1.4.5 => main: nimadir qilommanda
 v 1.4.4 => main: nimadir qilommanda
 v 1.4.3 => main: f 
