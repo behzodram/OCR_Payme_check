@@ -128,11 +128,43 @@ async def phone_check_handler(update: Update, context: ContextTypes.DEFAULT_TYPE
     if fb_phone in [None, -1, -2]:
         # await update.message.reply_text("❌ Check ma'lumotlari Bazada topilmadi.")
         return ConversationHandler.END
-        
+
     if user_phone != fb_phone[-4:]:
         await update.message.reply_text("❌ Telefon raqam mos kelmadi. Iltimos, qayta urinib ko'ring.")
         return ConversationHandler.END
     await update.message.reply_text("📱 Telefon raqami mos chiqdi.")
+
+    # endi checkni usedda tekshiramiz
+    doc_ref = db.collection('payments').document(payment_info['payment_time'])
+    doc = doc_ref.get()
+
+    data = doc.to_dict()
+
+    # Check used flag
+    if data.get('used'):
+        await update.message.reply_text("⚠️ Check allaqachon ishlatilgan (used).")
+        return ConversationHandler.END
+
+    fb_amount = float(data.get('amount', 0))
+    # Summa tekshiruvi: diff < 6%
+    if abs(fb_amount - amount)/fb_amount > 0.06:
+        await update.message.reply_text("❌ Checkdagi summa FBdagi summa bilan mos emas.")
+        return ConversationHandler.END
+
+    await update.message.reply_text("✅ Check to'lov miqdori FBdagi ma'lumotlar bilan mos keldi. ")
+
+    # Hammasi to'g'ri bo'lsa, status success va used=True
+    doc_ref.update({
+        "used": True,
+        "status": "success"
+    })
+
+    # Rasmni Storage ga saqlash
+    file_name = f"checks/{payment_info['transaction_id']}.jpg"
+    blob = bucket.blob(file_name)
+    blob.upload_from_string(photo_bytes, content_type='image/jpeg')
+
+    await update.message.reply_text("✅ Check muvaffaqiyatli tekshirildi va ishlatildi. Rahmat!")
 
     return ConversationHandler.END
 
