@@ -12,6 +12,34 @@ from commands import start, stats, help_command, share
 
 # Logger
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
+# from aiogram import Bot
+# from aiogram.types import FSInputFile
+
+# bot = Bot(token=BOT_TOKEN)
+
+async def Rahmat_check(message, payment_info):
+
+    if not (
+        payment_info.get("transaction_id") and
+        payment_info.get("amount") and
+        payment_info.get("payment_time") and
+        payment_info.get("payment_service")
+    ):
+
+        photo = FSInputFile("photos/check.jpg")
+
+        await message.answer(
+            "❌ Check noto‘g‘ri yoki to‘liq emas.\n\n"
+            "Iltimos, quyidagi namunaga o‘xshash to‘liq Rahmat check yuboring 👇"
+        )
+
+        await message.answer_photo(photo)
+
+        return False  # Check noto‘g‘ri yoki to‘liq emas
+
+    # Agar hammasi mavjud bo‘lsa davom etadi
+    await message.answer("✅ Check qabul qilindi.")
+    return True  # Check to‘g‘ri va to‘liq
 
 # OCR orqali to‘lov ma’lumotlarini ajratib olish
 async def extract_payment_info(text: str):
@@ -54,9 +82,9 @@ async def extract_payment_info(text: str):
 
     return {
         "transaction_id": transaction_id,
+        "payment_service": payment_service,
         "amount": amount,
         "payment_time": payment_time,
-        "payment_service": payment_service
     }
 
 # Rasmni qabul qilish va Tesseract OCR
@@ -74,7 +102,9 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # To‘lov ma’lumotlarini ajratib olish
     payment_info = await extract_payment_info(text)
-    await update.message.reply_text(f"To‘lov ma’lumotlari:\nIdentifikator: {payment_info['transaction_id']}\nSumma: {payment_info['amount']} so'm\nVaqt: {payment_info['payment_time']}\nXizmat: {payment_info['payment_service']}")
+    checkmi = await Rahmat_check(update.message, payment_info)
+    if checkmi:
+        await update.message.reply_text(f"To‘lov ma’lumotlari:\nIdentifikator: {payment_info['transaction_id']}\nXizmat: {payment_info['payment_service']}\nSumma: {payment_info['amount']} so'm\nVaqt: {payment_info['payment_time']}")
 
 # Bot ishga tushurish
 if __name__ == "__main__":
