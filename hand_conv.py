@@ -15,6 +15,7 @@ import pytesseract
 import firebase_admin
 from firebase_admin import credentials, firestore, storage
 import io, os, re
+import asyncio
 
 from config import *
 # Commands fayldan import qilamiz
@@ -140,4 +141,4 @@ async def main():
 
 
 if __name__ == "__main__":
-    await main()
+    asyncio.run(main())
