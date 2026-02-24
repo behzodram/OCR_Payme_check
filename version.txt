@@ -1,3 +1,4 @@
+v 1.2.8 => main: Go back OCR and temp joriy for update this one
 v 1.2.7 => main: ConversationHandler imported
 v 1.2.6 => main: WAITING conv handler added
 v 1.2.5 => main: message
