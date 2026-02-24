@@ -12,12 +12,9 @@ from commands import start, stats, help_command, share
 
 # Logger
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
-# from aiogram import Bot
-# from aiogram.types import FSInputFile
+from telegram import InputFile
 
-# bot = Bot(token=BOT_TOKEN)
-
-async def Rahmat_check(message, payment_info):
+async def Rahmat_check(update, payment_info):
 
     if not (
         payment_info.get("transaction_id") and
@@ -26,21 +23,19 @@ async def Rahmat_check(message, payment_info):
         payment_info.get("payment_service")
     ):
 
-        photo = FSInputFile("photos/check.jpg")
+        with open("photos/check.jpg", "rb") as photo:
+            await update.message.reply_text(
+                "❌ Check noto‘g‘ri yoki to‘liq emas.\n\n"
+                "Iltimos, quyidagi namunaga o‘xshash to‘liq Rahmat check yuboring 👇"
+            )
 
-        await message.answer(
-            "❌ Check noto‘g‘ri yoki to‘liq emas.\n\n"
-            "Iltimos, quyidagi namunaga o‘xshash to‘liq Rahmat check yuboring 👇"
-        )
-
-        await message.answer_photo(photo)
+            await update.message.reply_photo(photo)
 
         return False  # Check noto‘g‘ri yoki to‘liq emas
 
-    # Agar hammasi mavjud bo‘lsa davom etadi
-    await message.answer("✅ Check qabul qilindi.")
+    await update.message.reply_text("✅ Check qabul qilindi.")
     return True  # Check to‘g‘ri va to‘liq
-
+    
 # OCR orqali to‘lov ma’lumotlarini ajratib olish
 async def extract_payment_info(text: str):
     # Textni normalize qilamiz
