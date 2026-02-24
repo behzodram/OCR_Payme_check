@@ -27,7 +27,7 @@ WAIT_PHONE = 1
 # Logger
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
 
-async def firebase_init():
+def firebase_init():
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     SERVICE_KEY_PATH = os.path.join(BASE_DIR, "serviceAccountKey.json")
 
@@ -91,7 +91,7 @@ async def phone_check_handler(update: Update, context: ContextTypes.DEFAULT_TYPE
     # Firebase initialization
     db = context.application.bot_data["db"]
     bucket = context.application.bot_data["bucket"]
-    
+
     user_phone = await update.message.text.strip()
     caption_text = context.user_data.get("caption_text")
 
@@ -117,7 +117,7 @@ def main():
     app = ApplicationBuilder().token(BOT_TOKEN).build()
 
     # Firebase init
-    db, bucket = await firebase_init()
+    db, bucket = firebase_init()
 
     # Global saqlaymiz
     app.bot_data["db"] = db
