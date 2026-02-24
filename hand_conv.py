@@ -102,8 +102,7 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     context.user_data["payment_info"] = payment_info
     context.user_data["checkmi"] = checkmi 
     
-    context.user_data["user_phone4"] = text  # Caption matnini saqlaymiz
-    # context.user_data["photo_file_id"] = await update.message.photo[-1].file_id
+    context.user_data["photo_file_id"] = await update.message.photo[-1].file_id
     
     return WAIT_PHONE
 
@@ -115,11 +114,23 @@ async def phone_check_handler(update: Update, context: ContextTypes.DEFAULT_TYPE
     bucket = context.application.bot_data["bucket"]
 
     user_phone = await update.message.text.strip()
-    caption_text = context.user_data.get("caption_text")
-
-    if not caption_text:
-        await update.message.reply_text("❌ Caption topilmadi.")
+    payment_info = context.user_data.get("payment_info")
+    checkmi = context.user_data.get("checkmi")
+    
+    if not payment_info or not checkmi:
+        await update.message.reply_text("❌ Ichki xatolik yuz berdi. Iltimos, rasmni qayta yuboring.")
         return ConversationHandler.END
+    
+    fb_phone = await firebase_phone(db, payment_info['payment_time'])
+    if not fb_phone:
+        await update.message.reply_text("❌ Telefon raqam topilmadi.")
+        return ConversationHandler.END
+    
+    if user_phone != fb_phone[-4:]:
+        await update.message.reply_text("❌ Telefon raqam mos kelmadi. Iltimos, qayta urinib ko'ring.")
+        return ConversationHandler.END
+    await update.message.reply_text("📱 Telefon raqami mos chiqdi.")
+
 
     # Oddiy taqqoslash (caption ichida telefon mavjudligini tekshiramiz)
     if user_phone in caption_text:
