@@ -28,7 +28,7 @@ WAIT_PHONE = 1
 # Logger
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
 
-async def firebase_init():
+def firebase_init():
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     SERVICE_KEY_PATH = os.path.join(BASE_DIR, "serviceAccountKey.json")
 
@@ -114,11 +114,11 @@ async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE):
     return ConversationHandler.END
 
 
-async def main():
+def main():
     app = ApplicationBuilder().token(BOT_TOKEN).build()
 
     # Firebase init
-    db, bucket = await firebase_init()
+    db, bucket = firebase_init()
 
     # Global saqlaymiz
     app.bot_data["db"] = db
@@ -141,4 +141,4 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
