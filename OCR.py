@@ -151,16 +151,11 @@ if __name__ == "__main__":
     app.add_handler(CommandHandler("help", help_command))
     # share uchun lambda orqali BOT_USERNAME beriladi
     app.add_handler(CommandHandler("share", lambda u, c: share(u, c, BOT_USERNAME)))
-
+    
     # Rasm handler
     app.add_handler(MessageHandler(filters.PHOTO, photo_handler))
-
+    # phone_check handler
+    app.add_handler(CommandHandler("phone_check", phone_check_handler))
     print("Bot ishga tushdi...")
     app.run_polling()
 
-
-# Firebase ishga tushirish (bitta marta)
-cred = credentials.Certificate("firebase_service_account.json")
-firebase_admin.initialize_app(cred, {
-    'storageBucket': 'your-bucket-name.appspot.com'
-})
