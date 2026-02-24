@@ -48,7 +48,7 @@ async def firebase_phone(db, payment_time, update:Update):
 
     if not doc.exists:
         await update.message.reply_text("❌ Checkingiz Bazada topilmadi.")
-        return None
+        return ConversationHandler.END
         
     data = doc.to_dict()
     fb_phone = data.get("phone")
