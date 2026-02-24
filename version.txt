@@ -1,3 +1,4 @@
+v 1.5.4 => main: update
 v 1.5.3 => main: rm await from str
 v 1.5.2 => main: rm file id
 v 1.5.1 => main: update

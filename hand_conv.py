@@ -121,7 +121,7 @@ async def phone_check_handler(update: Update, context: ContextTypes.DEFAULT_TYPE
         await update.message.reply_text("❌ Ichki xatolik yuz berdi. Iltimos, rasmni qayta yuboring.")
         return ConversationHandler.END
     
-    fb_phone = await firebase_phone(db, payment_info['payment_time'])
+    fb_phone = await firebase_phone(db, payment_info['payment_time'], update)
     if not fb_phone:
         await update.message.reply_text("❌ Telefon raqam topilmadi.")
         return ConversationHandler.END
