@@ -1,3 +1,4 @@
+v 1.6.9 => main: photo_bytes = bytes(photo_bytes)                 # ✅ bytes ga aylantiramiz
 v 1.6.8 => main: file id RAMda saqlandi va u bo'yicha photo olinib fb Storageda saqlandi
 v 1.6.7 => main: back
 v 1.6.6 => main: file id RAMda saqlandi va u bo'yicha photo olinib fb Storageda saqlandi

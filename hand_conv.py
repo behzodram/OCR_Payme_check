@@ -173,8 +173,9 @@ async def phone_check_handler(update: Update, context: ContextTypes.DEFAULT_TYPE
     # Telegramdan file_id orqali file olish
     file = await context.bot.get_file(file_id)
     # photo_bytes hosil qilamiz
-    photo_bytes = await file.download_as_bytearray()
-
+    photo_bytes = await file.download_as_bytearray()  # bytearray
+    photo_bytes = bytes(photo_bytes)                 # ✅ bytes ga aylantiramiz
+    
     # Rasmni Storage ga saqlash
     file_name = f"checks/{payment_info['transaction_id']}.jpg"
     blob = bucket.blob(file_name)
