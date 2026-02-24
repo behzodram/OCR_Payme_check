@@ -41,7 +41,7 @@ def firebase_init():
     bucket = storage.bucket()
     return db, bucket
 
-async def firebase_phone(db, payment_time):
+async def firebase_phone(db):
     # Firestore collection: payments
     doc_ref = db.collection('payments').document(payment_time)
     doc = doc_ref.get()
