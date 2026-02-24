@@ -97,12 +97,7 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"Vaqt: {payment_info['payment_time']}\n\n"
         f"📱 Endi {fb_phone[-4:]}-xx-xx ni songgi 4 raqamini kiriting:"
     )
-
-    await update.message.reply_text(
-        f"Telefon raqamingiz: {masked}\n\n"
-        "Iltimos, telefon raqamingizning so‘nggi 4 raqamini kiriting:"
-    )
-
+    
     context.user_data["payment_info"] = payment_info
     context.user_data["checkmi"] = checkmi 
     
