@@ -1,3 +1,4 @@
+v 1.2.0 => main: import os, io
 v 1.1.9 => main: import os 
 v 1.1.8 => main: OCR yangilandi va Listener bilan sinxronlanyapti
 v 1.1.7 => main: Photo handler check def updated

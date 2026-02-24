@@ -7,7 +7,7 @@ import pytesseract
 from config import BOT_TOKEN, BOT_USERNAME
 import firebase_admin
 from firebase_admin import credentials, firestore, storage
-import io
+import io, os
 
 # from datetime import datetime
 
