@@ -1,3 +1,4 @@
+v 1.5.1 => main: update
 v 1.5.0 => main: nimadir qilommanda
 v 1.4.9 => main: nimadir qilommanda
 v 1.4.8 => main: 2 handlerda moslik va checkni vaqti lik idni fb dan ko'rib uni phone [:-4] sini ko'rsatadi va xxxx ni user input bn taqqoslab moslik aniqlaydi

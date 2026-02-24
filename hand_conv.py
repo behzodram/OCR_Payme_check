@@ -87,7 +87,7 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_photo(photo)
         return ConversationHandler.END
 
-    fb_phone = await firebase_phone(db, payment_info['payment_time'])
+    fb_phone = await firebase_phone(db, payment_info['payment_time'], update)
 
     await update.message.reply_text(
         "📸 Rasm qabul qilindi.\n"
