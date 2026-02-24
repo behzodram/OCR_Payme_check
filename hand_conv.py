@@ -72,10 +72,10 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "📸 Rasm qabul qilindi.\n"
         "    To'lov ma'lumotlari:\n"
-        "    Identifikator: {payment_info['transaction_id']}\n"
-        "    Xizmat: {payment_info['payment_service']}\n"
-        "    Summa: {payment_info['amount']} so'm\n"
-        "    Vaqt: {payment_info['payment_time']}\n\n"
+        f"    Identifikator: {payment_info['transaction_id']}\n"
+        f"    Xizmat: {payment_info['payment_service']}\n"
+        f"    Summa: {payment_info['amount']} so'm\n"
+        f"    Vaqt: {payment_info['payment_time']}\n\n"
         "📱 Endi telefon raqamingizni kiriting:"
     )
 
