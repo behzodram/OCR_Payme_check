@@ -1,3 +1,4 @@
+v 1.1.5 => main: Rahmat check def updated
 v 1.1.4 => main: Rahmat check def updated
 v 1.1.3 => main: check tekshiruvi (OCR darajada faqat matnga asoslanib)
 v 1.1.2 => main: id olib tashlandi, Rasm sifati muhim ekan. id=589168 rasmda birida xira boshqasida tiniq tushgan xirasida natija xato chiqdi

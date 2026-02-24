@@ -22,18 +22,7 @@ async def Rahmat_check(update, payment_info):
         payment_info.get("payment_time") and
         payment_info.get("payment_service")
     ):
-
-        with open("photos/check.jpg", "rb") as photo:
-            await update.message.reply_text(
-                "❌ Check noto‘g‘ri yoki to‘liq emas.\n\n"
-                "Iltimos, quyidagi namunaga o‘xshash to‘liq Rahmat check yuboring 👇"
-            )
-
-            await update.message.reply_photo(photo)
-
         return False  # Check noto‘g‘ri yoki to‘liq emas
-
-    await update.message.reply_text("✅ Check qabul qilindi.")
     return True  # Check to‘g‘ri va to‘liq
     
 # OCR orqali to‘lov ma’lumotlarini ajratib olish
@@ -98,8 +87,17 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # To‘lov ma’lumotlarini ajratib olish
     payment_info = await extract_payment_info(text)
     checkmi = await Rahmat_check(update.message, payment_info)
-    if checkmi:
-        await update.message.reply_text(f"To‘lov ma’lumotlari:\nIdentifikator: {payment_info['transaction_id']}\nXizmat: {payment_info['payment_service']}\nSumma: {payment_info['amount']} so'm\nVaqt: {payment_info['payment_time']}")
+    if not checkmi:
+        with open("photos/check.jpg", "rb") as photo:
+            await update.message.reply_text(
+                "❌ Check noto‘g‘ri yoki to‘liq emas.\n\n"
+                "Iltimos, quyidagi namunaga o‘xshash to‘liq Rahmat check yuboring 👇"
+            )
+
+            await update.message.reply_photo(photo)
+    await update.message.reply_text("✅ Check qabul qilindi.")
+    
+    await update.message.reply_text(f"To‘lov ma’lumotlari:\nIdentifikator: {payment_info['transaction_id']}\nXizmat: {payment_info['payment_service']}\nSumma: {payment_info['amount']} so'm\nVaqt: {payment_info['payment_time']}")
 
 # Bot ishga tushurish
 if __name__ == "__main__":
