@@ -88,7 +88,8 @@ async def handler(event):
                 "phone": phone,
                 "amount": amount,
                 "date": date,
-                "status": "pending"
+                "status": "pending",
+                "used": False
             })
 
             print("✅ FIREBASE GA YOZILDI:", doc_id)

@@ -160,8 +160,11 @@ async def phone_check_handler(update: Update, context: ContextTypes.DEFAULT_TYPE
 
     # Hammasi to'g'ri bo'lsa, status success va used=True
     doc_ref.update({
-        "used": True,
-        "status": "success"
+        "user_id": update.message.from_user.id,
+        "transaction_id": payment_info['transaction_id'],
+        "service": payment_info['payment_service'],
+        "status": "success",
+        "used": True
     })
 
     # context.user_data dan file_id olamiz
@@ -175,7 +178,7 @@ async def phone_check_handler(update: Update, context: ContextTypes.DEFAULT_TYPE
     # photo_bytes hosil qilamiz
     photo_bytes = await file.download_as_bytearray()  # bytearray
     photo_bytes = bytes(photo_bytes)                 # ✅ bytes ga aylantiramiz
-    
+
     # Rasmni Storage ga saqlash
     file_name = f"checks/{payment_info['transaction_id']}.jpg"
     blob = bucket.blob(file_name)
