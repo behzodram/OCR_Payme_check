@@ -113,7 +113,7 @@ async def phone_check_handler(update: Update, context: ContextTypes.DEFAULT_TYPE
     db = context.application.bot_data["db"]
     bucket = context.application.bot_data["bucket"]
 
-    user_phone = await update.message.text.strip()
+    user_phone = update.message.text.strip()
     payment_info = context.user_data.get("payment_info")
     checkmi = context.user_data.get("checkmi")
     
