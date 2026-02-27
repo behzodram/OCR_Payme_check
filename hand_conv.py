@@ -88,12 +88,12 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 "Iltimos, quyidagi namunaga o'xshash to'liq Rahmat check yuboring 👇"
             )
             await update.message.reply_photo(photo)
-        return ConversationHandler.END
+        # return ConversationHandler.END
 
     fb_phone = await firebase_phone(db, payment_info['payment_time'], update)
     if fb_phone in [None, -1, -2]:
         # await update.message.reply_text("❌ Check ma'lumotlari Bazada topilmadi.")
-        return ConversationHandler.END
+        # return ConversationHandler.END
 
     await update.message.reply_text(
         "📸 Rasm qabul qilindi.\n"
