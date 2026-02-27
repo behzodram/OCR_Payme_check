@@ -79,7 +79,7 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     await update.message.reply_text(text)  # OCR natijasini tekshirish uchun yuboramiz
 
-    # checkmi = await Rahmat_check(update.message, payment_info)
+    checkmi = await Rahmat_check(update.message, payment_info)
 
     # if not checkmi:
     #     with open("photos/check.jpg", "rb") as photo:
@@ -102,7 +102,7 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"Xizmat: {payment_info['payment_service']}\n"
         f"Summa: {payment_info['amount']} so'm\n"
         f"Vaqt: {payment_info['payment_time']}\n\n"
-        f"📱 Endi {fb_phone[:-4]}-xx-xx ni songgi 4 raqamini kiriting:"
+        # f"📱 Endi {fb_phone[:-4]}-xx-xx ni songgi 4 raqamini kiriting:"
     )
 
     context.user_data["payment_info"] = payment_info
