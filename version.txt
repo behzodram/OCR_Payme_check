@@ -1,3 +1,4 @@
+v 1.8.3 => main: Old working kode backing
 v 1.8.2 => main: consolga til yozish
 v 1.8.1 => main: no END conv temp
 v 1.8.0 => main: no END conv temp
