@@ -69,7 +69,7 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     photo_bytes = await photo_file.download_as_bytearray()
 
     img = Image.open(io.BytesIO(photo_bytes))
-    text = pytesseract.image_to_string(img, lang='uz+eng+ru', config="--oem 3 --psm 6")
+    text = pytesseract.image_to_string(img, lang='uz+eng+rus', config="--oem 3 --psm 6")
 
     if not text.strip():
         await update.message.reply_text("Matn topilmadi.")
