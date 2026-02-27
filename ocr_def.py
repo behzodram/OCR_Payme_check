@@ -31,6 +31,9 @@ async def detect_language(text: str):
 # OCR orqali to'lov ma'lumotlarini ajratib olish
 async def extract_payment_info(text: str):
     language = await detect_language(text)
+
+    print(f"Detected language: {language}")  # Tilni tekshirish uchun konsolga chiqaramiz
+    
     if language == 'uz':
         return await extract_payment_info_uz(text)
     elif language == 'ru':
