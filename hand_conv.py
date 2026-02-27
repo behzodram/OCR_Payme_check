@@ -80,20 +80,20 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(text)  # OCR natijasini tekshirish uchun yuboramiz
 
     checkmi = await Rahmat_check(update.message, payment_info)
+    
+    if not checkmi:
+        with open("photos/check.jpg", "rb") as photo:
+            await update.message.reply_text(
+                "❌ Check noto'g'ri yoki to'liq emas.\n\n"
+                "Iltimos, quyidagi namunaga o'xshash to'liq Rahmat check yuboring 👇"
+            )
+            await update.message.reply_photo(photo)
+        return ConversationHandler.END
 
-    # if not checkmi:
-    #     with open("photos/check.jpg", "rb") as photo:
-    #         await update.message.reply_text(
-    #             "❌ Check noto'g'ri yoki to'liq emas.\n\n"
-    #             "Iltimos, quyidagi namunaga o'xshash to'liq Rahmat check yuboring 👇"
-    #         )
-    #         await update.message.reply_photo(photo)
-    #     return ConversationHandler.END
-
-    # fb_phone = await firebase_phone(db, payment_info['payment_time'], update)
-    # if fb_phone in [None, -1, -2]:
-    #     # await update.message.reply_text("❌ Check ma'lumotlari Bazada topilmadi.")
-    #     return ConversationHandler.END
+    fb_phone = await firebase_phone(db, payment_info['payment_time'], update)
+    if fb_phone in [None, -1, -2]:
+        # await update.message.reply_text("❌ Check ma'lumotlari Bazada topilmadi.")
+        return ConversationHandler.END
 
     await update.message.reply_text(
         "📸 Rasm qabul qilindi.\n"
@@ -102,7 +102,7 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"Xizmat: {payment_info['payment_service']}\n"
         f"Summa: {payment_info['amount']} so'm\n"
         f"Vaqt: {payment_info['payment_time']}\n\n"
-        # f"📱 Endi {fb_phone[:-4]}-xx-xx ni songgi 4 raqamini kiriting:"
+        f"📱 Endi {fb_phone[:-4]}-xx-xx ni songgi 4 raqamini kiriting:"
     )
 
     context.user_data["payment_info"] = payment_info
