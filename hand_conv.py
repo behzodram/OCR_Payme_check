@@ -69,13 +69,16 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     photo_bytes = await photo_file.download_as_bytearray()
 
     img = Image.open(io.BytesIO(photo_bytes))
-    text = pytesseract.image_to_string(img, lang='uz+eng')
+    text = pytesseract.image_to_string(img, lang='uz+eng+ru')
 
     if not text.strip():
         await update.message.reply_text("Matn topilmadi.")
         return ConversationHandler.END
 
     payment_info = await extract_payment_info(text)
+    
+    await update.message.reply_text(text)  # OCR natijasini tekshirish uchun yuboramiz
+
     checkmi = await Rahmat_check(update.message, payment_info)
 
     if not checkmi:
