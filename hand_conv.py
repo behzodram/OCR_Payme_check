@@ -79,7 +79,7 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     await update.message.reply_text(text)  # OCR natijasini tekshirish uchun yuboramiz
 
-    checkmi = await Rahmat_check(update.message, payment_info)
+    # checkmi = await Rahmat_check(update.message, payment_info)
 
     # if not checkmi:
     #     with open("photos/check.jpg", "rb") as photo:

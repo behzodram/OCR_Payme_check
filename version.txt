@@ -1,3 +1,4 @@
+v 1.7.7 => main: commenting
 v 1.7.6 => main: import qop ketibdi
 v 1.7.5 => main: import qop ketibdi
 v 1.7.4 => main: rus tilida check test
