@@ -1,3 +1,4 @@
+v 1.9.6 => main: checkmi changed for detection
 v 1.9.5 => main: checkmi changed for detection
 v 1.9.4 => main: fb phone comment opened
 v 1.9.3 => main: payment info first produced with lange
