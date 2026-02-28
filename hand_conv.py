@@ -76,7 +76,6 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return ConversationHandler.END
 
     payment_info, language = await extract_payment_info(text)
-    
     # await update.message.reply_text(text)  # OCR natijasini tekshirish uchun yuboramiz
 
     checkmi = await Rahmat_check(update.message, payment_info)
