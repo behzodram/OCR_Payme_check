@@ -98,8 +98,7 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"Xizmat: {payment_info['payment_service']}\n"
         f"Summa: {payment_info['amount']} so'm\n"
         f"Vaqt: {payment_info['payment_time']}\n\n"
-        # f"📱 Endi {fb_phone[:-4]}-xx-xx ni songgi 4 raqamini kiriting:"
-    )
+        )
 
     fb_phone = await firebase_phone(db, payment_info['payment_time'], update)
     if fb_phone in [None, -1, -2]:
