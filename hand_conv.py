@@ -102,13 +102,13 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
     fb_phone = await firebase_phone(db, payment_info['payment_time'], update)
-    # if fb_phone in [None, -1, -2]:
-    #     # await update.message.reply_text("❌ Check ma'lumotlari Bazada topilmadi.")
-    #     return ConversationHandler.END
+    if fb_phone in [None, -1, -2]:
+        # await update.message.reply_text("❌ Check ma'lumotlari Bazada topilmadi.")
+        return ConversationHandler.END
 
-    # await update.message.reply_text(
-    #     f"📱 Endi {fb_phone[:-4]}-xx-xx ni songgi 4 raqamini kiriting:"
-    # )
+    await update.message.reply_text(
+        f"📱 Endi {fb_phone[:-4]}-xx-xx ni songgi 4 raqamini kiriting:"
+    )
 
     context.user_data["payment_info"] = payment_info
     context.user_data["checkmi"] = checkmi 
