@@ -75,7 +75,7 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("Matn topilmadi.")
         return ConversationHandler.END
 
-    payment_info = await extract_payment_info(text)
+    payment_info, language = await extract_payment_info(text)
     
     # await update.message.reply_text(text)  # OCR natijasini tekshirish uchun yuboramiz
 
@@ -93,6 +93,7 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "📸 Rasm qabul qilindi.\n"
         "To'lov ma'lumotlari:\n\n"
+        f"Language: {language}\n\n"
         f"Identifikator: {payment_info['transaction_id']}\n"
         f"Xizmat: {payment_info['payment_service']}\n"
         f"Summa: {payment_info['amount']} so'm\n"
