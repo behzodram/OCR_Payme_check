@@ -5,7 +5,10 @@ from ocr_def_uz import extract_payment_info_uz
 from ocr_def_en import extract_payment_info_en
 
 async def Rahmat_check(update, payment_info):
-
+    if not payment_info:
+        await update.message.reply_text("❌ To'lov ma'lumotlarini ajratib olishda xatolik yuz berdi.")
+        return False
+        
     if not (
         payment_info.get("transaction_id") and
         payment_info.get("amount") and
