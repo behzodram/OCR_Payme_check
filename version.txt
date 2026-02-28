@@ -1,3 +1,4 @@
+v 1.8.7 => main: fb-phone commented
 v 1.8.6 => main: fb-phone commented
 v 1.8.5 => main: ocr 2 lang parser
 v 1.8.4 => main: Old working kode backing
