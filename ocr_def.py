@@ -2,7 +2,7 @@ import re, os
 
 from ocr_def_ru import extract_payment_info_ru
 from ocr_def_uz import extract_payment_info_uz
-# from ocr_def_en import extract_payment_info_en
+from ocr_def_en import extract_payment_info_en
 
 async def Rahmat_check(update, payment_info):
 

@@ -1,3 +1,4 @@
+v 1.8.9 => main: definition ocr def eng added
 v 1.8.8 => main: ocr def eng added
 v 1.8.7 => main: fb-phone commented
 v 1.8.6 => main: fb-phone commented
