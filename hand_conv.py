@@ -21,7 +21,7 @@ from config import *
 # Commands fayldan import qilamiz
 from cmd.commands import start, stats, help_command, share
 # OCR definitsiyalarini import qilamiz
-from def.ocr_def import extract_payment_info, detect_language, Rahmat_check
+from regex_def.ocr_def import extract_payment_info, detect_language, Rahmat_check
 
 from ocr_def import Rahmat_check, extract_payment_info
 
