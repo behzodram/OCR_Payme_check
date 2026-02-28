@@ -52,8 +52,13 @@ async def firebase_phone(db, payment_time, update:Update):
         
     data = doc.to_dict()
     fb_phone = data.get("phone")
+    fb_used = data.get("used", False)
+    
     if not fb_phone:
         await update.message.reply_text("❌ Telefon raqam topilmadi.")
+        return -1
+    if fb_used:
+        await update.message.reply_text("❌ Check allaqachon ishlatilgan.")
         return -1
     return fb_phone
     
@@ -99,6 +104,7 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"Vaqt: {payment_info['payment_time']}\n\n"
         )
 
+    if
     fb_phone = await firebase_phone(db, payment_info['payment_time'], update)
     if fb_phone in [None, -1, -2]:
         # await update.message.reply_text("❌ Check ma'lumotlari Bazada topilmadi.")

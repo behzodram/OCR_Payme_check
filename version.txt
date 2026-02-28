@@ -1,3 +1,4 @@
+v 1.9.9 => main: used check end conv
 v 1.9.8 => main: commented un nessecery codes removed
 v 1.9.7 => main: commented un nessecery codes removed
 v 1.9.6 => main: checkmi changed for detection
