@@ -1,3 +1,4 @@
+v 1.9.1 => main: commentlar bekor qilindi
 v 1.9.0 => main: file name chenged from _eng.py to _en.py
 v 1.8.9 => main: definition ocr def eng added
 v 1.8.8 => main: ocr def eng added
