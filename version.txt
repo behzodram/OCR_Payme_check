@@ -1,3 +1,4 @@
+v 1.8.5 => main: ocr 2 lang parser
 v 1.8.4 => main: Old working kode backing
 v 1.8.3 => main: Old working kode backing
 v 1.8.2 => main: consolga til yozish
