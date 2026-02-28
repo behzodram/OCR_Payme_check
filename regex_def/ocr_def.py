@@ -1,8 +1,8 @@
 import re, os
 
-from ocr_def_ru import extract_payment_info_ru
-from ocr_def_uz import extract_payment_info_uz
-from ocr_def_en import extract_payment_info_en
+from regex_def.ocr_def_ru import extract_payment_info_ru
+from regex_def.ocr_def_uz import extract_payment_info_uz
+from regex_def.ocr_def_en import extract_payment_info_en
 
 async def Rahmat_check(update, payment_info):
     if not payment_info:
