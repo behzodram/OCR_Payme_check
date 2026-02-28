@@ -19,8 +19,10 @@ import asyncio
 
 from config import *
 # Commands fayldan import qilamiz
-from commands import start, stats, help_command, share
+from cmd.commands import start, stats, help_command, share
 # OCR definitsiyalarini import qilamiz
+from def.ocr_def import extract_payment_info, detect_language, Rahmat_check
+
 from ocr_def import Rahmat_check, extract_payment_info
 
 WAIT_PHONE = 1
@@ -103,7 +105,7 @@ async def photo_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"Summa: {payment_info['amount']} so'm\n"
         f"Vaqt: {payment_info['payment_time']}\n\n"
         )
-        
+
     fb_phone = await firebase_phone(db, payment_info['payment_time'], update)
     if fb_phone in [None, -1, -2]:
         # await update.message.reply_text("❌ Check ma'lumotlari Bazada topilmadi.")
