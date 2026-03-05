@@ -1,0 +1,13 @@
+[Unit]
+Description=Rahmat_Listener Telegram Bot
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/behzod/github/Rahmat_Listener/app
+ExecStart=/home/ubuntu/behzod/github/Rahmat_Listener/venv/bin/python main.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

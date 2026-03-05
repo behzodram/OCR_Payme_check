@@ -4,3 +4,5 @@ __pycache__/
 serviceAccountKey.json
 *.session
 *.session-journal
+make.bat
+venv/
