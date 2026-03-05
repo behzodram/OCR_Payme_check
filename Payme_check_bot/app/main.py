@@ -19,8 +19,8 @@ import asyncio
 
 import sys
 from pathlib import Path
-# 2 papka yuqoriga yo'l qo'shish
-sys.path.append(str(Path(__file__).parent.parent))
+# 3 papka yuqoriga chiqish
+sys.path.append(str(Path(__file__).parent.parent.parent))
 from config import *
 
 # Commands fayldan import qilamiz
