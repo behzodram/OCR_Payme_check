@@ -17,7 +17,12 @@ from firebase_admin import credentials, firestore, storage
 import io, os, re
 import asyncio
 
+import sys
+from pathlib import Path
+# 2 papka yuqoriga yo'l qo'shish
+sys.path.append(str(Path(__file__).parent.parent))
 from config import *
+
 # Commands fayldan import qilamiz
 from command.commands import *
 # OCR definitsiyalarini import qilamiz
@@ -29,8 +34,8 @@ WAIT_PHONE = 1
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 def firebase_init():
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    SERVICE_KEY_PATH = os.path.join(BASE_DIR, "serviceAccountKey.json")
+    SERVICE_KEY_PATH = os.path.join(BASE_DIR, "..", "..", "serviceAccountKey.json")
+    SERVICE_KEY_PATH = os.path.abspath(SERVICE_KEY_PATH)
 
     cred = credentials.Certificate(SERVICE_KEY_PATH)
     firebase_admin.initialize_app(cred, {

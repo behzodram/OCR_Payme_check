@@ -3,3 +3,4 @@ pillow
 pytesseract
 firebase-admin
 telethon
+pathlib
