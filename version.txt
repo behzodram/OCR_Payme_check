@@ -1,3 +1,4 @@
+v 2.1.2 => main: serviceAccountKey.json BASE_DIR undeclared tuzatilmoqda
 v 2.1.1 => main: config.py 2 yuqori emas 3 yuquri subfolder ekan kod tuzatildi tain.py da test qilindi
 v 2.1.0 => main: qayta fayllarni tartiblash config va serviceAccountKey.json fayllarni unikallashtirish
 v 2.0.9 => main: qayta fayllarni tartiblash service uchun bazi fayllarni app ichiga ko'chirish

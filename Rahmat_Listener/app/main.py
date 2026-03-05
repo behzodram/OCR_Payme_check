@@ -9,6 +9,7 @@ from firebase_admin import credentials, firestore
 # 🔥 FIREBASE INIT
 # ===============================
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SERVICE_KEY_PATH = os.path.join(BASE_DIR, "..", "..", "serviceAccountKey.json")
 SERVICE_KEY_PATH = os.path.abspath(SERVICE_KEY_PATH)
 

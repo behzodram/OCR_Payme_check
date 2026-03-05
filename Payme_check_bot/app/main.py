@@ -34,6 +34,7 @@ WAIT_PHONE = 1
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 def firebase_init():
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     SERVICE_KEY_PATH = os.path.join(BASE_DIR, "..", "..", "serviceAccountKey.json")
     SERVICE_KEY_PATH = os.path.abspath(SERVICE_KEY_PATH)
 
