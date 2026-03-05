@@ -5,8 +5,8 @@ After=network.target
 [Service]
 Type=simple
 User=ubuntu
-WorkingDirectory=/home/ubuntu/behzod/github/Payme_check_bot/app
-ExecStart=/home/ubuntu/behzod/github/Payme_check_bot/venv/bin/python main.py
+WorkingDirectory=/home/ubuntu/behzod/github/OCR_Payme_check/Payme_check_bot/app
+ExecStart=/home/ubuntu/behzod/github/OCR_Payme_check/Payme_check_bot/venv/bin/python main.py
 Restart=always
 
 [Install]
