@@ -1,5 +1,5 @@
-python-telegram-bot 
-pillow
-pytesseract
-firebase-admin
-telethon
+Flask==2.2.3
+Flask-Login==0.6.2
+firebase-admin==6.1.0
+Werkzeug==2.2.3
+python-dotenv==1.0.0
