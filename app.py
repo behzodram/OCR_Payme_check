@@ -30,8 +30,8 @@ login_manager.login_view = 'login'
 
 # Oddiy admin user (ishlab chiqish uchun)
 # Real proyektda bazadan olinishi kerak
-ADMIN_USERNAME = 'admin'
-ADMIN_PASSWORD = generate_password_hash('admin123')  # Parolni o'zgartiring!
+ADMIN_USERNAME = 'Behzod'
+ADMIN_PASSWORD = generate_password_hash('console2704')  # Parolni o'zgartiring!
 
 class User(UserMixin):
     def __init__(self, id):
