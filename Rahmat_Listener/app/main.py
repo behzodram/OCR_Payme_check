@@ -5,7 +5,13 @@ from telethon import TelegramClient, events
 import firebase_admin
 from firebase_admin import credentials, firestore
 
-from config import API_ID, API_HASH
+import sys
+from pathlib import Path
+
+# 3 papka yuqoriga chiqish
+sys.path.append(str(Path(__file__).parent.parent.parent))
+
+from config import *
 
 # ===============================
 # 🔥 FIREBASE INIT
