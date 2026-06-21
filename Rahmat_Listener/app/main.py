@@ -5,6 +5,8 @@ from telethon import TelegramClient, events
 import firebase_admin
 from firebase_admin import credentials, firestore
 
+from config import API_ID, API_HASH
+
 # ===============================
 # 🔥 FIREBASE INIT
 # ===============================
@@ -18,14 +20,15 @@ firebase_admin.initialize_app(cred)
 
 db = firestore.client()
 
-# ===============================
-# 🔑 TELEGRAM CONFIG
-# ===============================
+client = TelegramClient(
+    "Rahmat",
+    API_ID,
+    API_HASH,
+    device_model="PC/OCR_Payme_Check",
+    system_version="Windows 10",
+    app_version="Rahmat bot Listener -> Firebase 1.0"
+)
 
-api_id = 24954222        # o'zingiznikini yozing
-api_hash = "c6f82461c57b8639f6dcc1a1bace4d95"
-
-client = TelegramClient("rahmat_listener", api_id, api_hash)
 
 # 🎯 Target bot username
 TARGET_BOT = "RahmatRobot"

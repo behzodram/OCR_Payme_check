@@ -1,3 +1,4 @@
+v 2.1.7 => main: TG qurilmalarda Seans nomi Aniq ko'rinadi, Config.py added.
 v 2.1.6 => main: mobile user friandly + flexible for desktop
 v 2.1.5 => main: flask app yozildi
 v 2.1.4 => main: 2ta systemd uchun stop.sh yozildi
