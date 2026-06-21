@@ -1,4 +1,4 @@
-v 2.2.0 => main: Rahmat Listener config data cut/moved to single config.py at main folder.
+v 2.2.0 => main: Bot nomini DisLog2_bot ga ko'chirib, bot komandalarini tahrirlandi.
 v 2.1.9 => main: Rahmat Listener config data cut/moved to single config.py at main folder.
 v 2.1.8 => main: Qurilmalarda Seans Linux deb korsatishi un edit 1 lines of code.
 v 2.1.7 => main: TG qurilmalarda Seans nomi Aniq ko'rinadi, Config.py added.
