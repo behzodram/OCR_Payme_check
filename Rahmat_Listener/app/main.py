@@ -24,7 +24,7 @@ client = TelegramClient(
     "Rahmat",
     API_ID,
     API_HASH,
-    device_model="PC/OCR_Payme_Check",
+    device_model="AWS LINUX/OCR_Payme_Check",
     system_version="Windows 10",
     app_version="Rahmat bot Listener -> Firebase 1.0"
 )
