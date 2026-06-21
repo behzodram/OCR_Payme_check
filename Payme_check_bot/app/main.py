@@ -233,6 +233,9 @@ def main():
 
     app.add_handler(conv_handler)
     app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("stats", stats))
+    app.add_handler(CommandHandler("help", help_command))
+    app.add_handler(CommandHandler("share", lambda update, context: share(update, context, BOT_USERNAME)))
 
     app.run_polling()
 

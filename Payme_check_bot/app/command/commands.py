@@ -23,8 +23,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         json.dump(list(users), f)
 
     await update.message.reply_text(
-        "Assalom! Rasmingizni yuboring, men undagi matnni ajratib beraman.\n\n"
-        "/help buyrug'ini yozib, yordam olishingiz mumkin."
+        "Assalom! Rahmat Checkni jo'nating, men sizni chekingiz bo'yicha ro'yxatga olaman."
+        # "\n\n/help buyrug'ini yozib, yordam olishingiz mumkin."
     )
 
 # stats komandasi
@@ -34,17 +34,18 @@ async def stats(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # help komandasi
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     help_text = (
-        "Bot quyidagi buyruqlarni qo‘llab-quvvatlaydi:\n\n"
+        "Bot quyidagi buyruqlarni qo'llab-quvvatlaydi:\n\n"
         "/start - Botni ishga tushirish va matn ajratish uchun tayyorlash\n"
-        "/stats - Bot foydalanuvchilari sonini ko‘rish\n"
-        "/share - Bot username’ini nusxa olish\n"
-        "/help - Bu yordam oynasini ko‘rish"
+        "/stats - Bot foydalanuvchilari sonini ko'rish\n"
+        "/share - Bot usernamini nusxa olish\n"
+        "/cancel - Chekingizni qabul qilishni bekor qilish\n"
+        "/help - Bu yordam oynasini ko'rish"
     )
     await update.message.reply_text(help_text)
 
 # share komandasi
 async def share(update: Update, context: ContextTypes.DEFAULT_TYPE, BOT_USERNAME: str):
     await update.message.reply_text(
-        f"Bot username’i:\n{BOT_USERNAME}\n\n"
-        "Username’ni nusxa olish uchun shu matnni tanlab copy qiling."
+        f"Bot usernami:\n{BOT_USERNAME}\n\n"
+        "Usernameni nusxa olish uchun shu matnni tanlab copy qiling."
     )
