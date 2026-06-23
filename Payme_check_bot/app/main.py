@@ -236,9 +236,9 @@ def main():
     app.add_handler(CommandHandler("stats", stats))
     app.add_handler(CommandHandler("help", help_command))
     app.add_handler(CommandHandler("share", lambda update, context: share(update, context, BOT_USERNAME)))
-
+    app.add_handler(CommandHandler("donate", donate))
+    
     app.run_polling()
-
 
 if __name__ == "__main__":
     main()

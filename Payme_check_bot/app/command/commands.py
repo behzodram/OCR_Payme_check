@@ -37,6 +37,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "Bot quyidagi buyruqlarni qo'llab-quvvatlaydi:\n\n"
         "/start - Botni ishga tushirish va matn ajratish uchun tayyorlash\n"
         "/stats - Bot foydalanuvchilari sonini ko'rish\n"
+        "/donate - Botni qo'llab-quvvatlash uchun havola\n"
         "/share - Bot usernamini nusxa olish\n"
         "/cancel - Chekingizni qabul qilishni bekor qilish\n"
         "/help - Bu yordam oynasini ko'rish"
@@ -49,3 +50,12 @@ async def share(update: Update, context: ContextTypes.DEFAULT_TYPE, BOT_USERNAME
         f"Bot usernami:\n{BOT_USERNAME}\n\n"
         "Usernameni nusxa olish uchun shu matnni tanlab copy qiling."
     )
+
+# donate komandasi
+async def donate(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "Agar siz botni qo'llab-quvvatlamoqchi bo'lsangiz, quyidagi havolani ishlatishingiz mumkin:\n\n"
+        "https://app.rhmt.uz/a5576b5e-7dd2-11f0-b568-005056805427\n\n"
+        "Rahmat!"
+    )
+    
